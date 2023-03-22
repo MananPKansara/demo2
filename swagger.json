@@ -1,0 +1,114 @@
+{
+    "swagger": "2.0",
+
+    "info": {
+        "version": "1.0.0",
+        "title": "Demo in node",
+        "description": "Manangement of post created by users"
+    },
+    
+    "tags": [
+    { "name": "Signup" },
+    { "name": "Login" },
+    { "name": "Posts" },
+    { "name": "Comments" }
+    ],
+
+    "securityDefinitions": {
+        "jwt": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "Authorization"
+        }
+    },
+    "security": [
+    {
+        "jwt": []
+    }
+    ],
+
+    "paths": {
+        "/signup": {
+            "post": {
+                "tags": ["Signup"],
+                "summury": "Signup API",
+                "secutrity": [],
+                "consumes": ["multipart/form-data"],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "Username",
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Email",
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Password",
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "File upload",
+                        "type": "file"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Create New Post",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": { "type": "boolean" },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": { 
+                                                "_id": { "type": "string" },
+                                                "firstname": { "type": "string" },
+                                                "lastname": { "type": "string" },
+                                                "email": { "type": "string" },
+                                                "token": { "type": "string" }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }, 
+                    "422": {
+                        "description": "Validation error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "definations": {
+        "signup": {
+            "required": ["username", "email", "password"],
+            "properties": {
+                "username": { "type" : "string" },
+                "email": { "type" : "string" },
+                "password": { "type" : "string" }
+            }
+        }
+    }
+}
